@@ -1,0 +1,76 @@
+project:
+  type: website
+  output-dir: docs
+
+execute:
+  cache: true
+  freeze: auto
+  warning: false
+
+
+
+  
+website:
+  title: "Home"
+  
+  navbar:
+    tools:
+      - icon: twitter
+        href: https://twitter.com/monalisacdc
+      - icon: github
+        href: https://github.com/Monalisacdc
+      - icon: linkedin
+        href: https://www.linkedin.com/in/monalisa-de-c%C3%B3l-62a6b31b8/
+    background: white  
+    foreground: danger
+    left:
+    - text: General guidelines
+      href: general_guidelines.qmd
+    - text: Alignment
+      href: build_aligment.qmd
+    - text: Genetic Structure 
+      menu:
+        - href: AMOVA.qmd
+          text: Introduction AMOVA
+        - href: arlequin.qmd
+          text: AMOVA in Arlequin 
+        - href: amova_R.qmd
+          text: AMOVA in R
+        - href: DAPC.qmd
+          text: DAPC
+        - href: structure.qmd
+          text: Structure
+        - href: UPGMA.qmd
+          text: UPGMA
+        - href: NJ.qmd
+          text: Neighbor-Joining tree
+        - href: MSN.qmd
+          text: MSN
+    - text: Others
+      menu:
+        - href: Linkage_disequilibrium.qmd
+          text: Linkage disequilibrium
+        - href: migration.qmd
+          text: Migration
+        - href: Tajima's.qmd
+          text: Tajima's neutrality test
+    - text: Genetic Diversity 
+      menu:
+        - href: riqueza.qmd
+          text: Richness Genotypic
+        - href: diversidade.qmd
+          text: Diversity and Eveness Genotypic
+    - text: Ack/Support
+      href: agradecimentos.qmd
+    
+   
+
+format:
+  html:
+    theme: united
+    css: styles.css
+    toc: true
+    
+    
+editor: visual
+

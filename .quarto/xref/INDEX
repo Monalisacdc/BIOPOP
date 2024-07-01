@@ -1,0 +1,56 @@
+{
+  "index.qmd": {
+    "index.html": "a1be9843"
+  },
+  "about.qmd": {
+    "about.html": "40a8f055"
+  },
+  "build_aligment.qmd": {
+    "build_aligment.html": "0808886e"
+  },
+  "AMOVA.qmd": {
+    "AMOVA.html": "0532d09a"
+  },
+  "arlequin.qmd": {
+    "arlequin.html": "55d81db4"
+  },
+  "amova_R.qmd": {
+    "amova_R.html": "771b6f5d"
+  },
+  "structure.qmd": {
+    "structure.html": "bc63293e"
+  },
+  "DAPC.qmd": {
+    "DAPC.html": "817f522e"
+  },
+  "UPGMA.qmd": {
+    "UPGMA.html": "b6044350"
+  },
+  "diversidade.qmd": {
+    "diversidade.html": "c3bd2cb6"
+  },
+  "riqueza.qmd": {
+    "riqueza.html": "5cd2562a"
+  },
+  "migration.qmd": {
+    "migration.html": "1a90fba3"
+  },
+  "agradecimentos.qmd": {
+    "agradecimentos.html": "ca509c06"
+  },
+  "MSN.qmd": {
+    "MSN.html": "61e03f1f"
+  },
+  "NJ.qmd": {
+    "NJ.html": "8e6df1c9"
+  },
+  "Linkage_disequilibrium.qmd": {
+    "Linkage_disequilibrium.html": "377162d0"
+  },
+  "general_guidelines.qmd": {
+    "general_guidelines.html": "1708f524"
+  },
+  "Tajima's.qmd": {
+    "Tajima's.html": "3f5d6f87"
+  }
+}

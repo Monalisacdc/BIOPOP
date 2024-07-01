@@ -1,0 +1,11 @@
+---
+title: "general guidelines"
+---
+
+![](guia.jpg){fig-align="center"}
+
+**Data information**
+
+The pathogen analyzed across different stages is haploid. The dataset comprises 59 DNA sequences from various isolates obtained from two distinct locations within the same culture: 27 isolates from Group 1 and 32 from Group 2.
+
+**The research is driven by specific inquiries.** For example, structural analysis indicates the occurrence of migration between populations due to their lack of structure. However, it does not provide quantitative information on the extent of migration. Therefore, I proceed with another analysis to assess the exact degree of migration.

@@ -1,0 +1,35 @@
+---
+title: ""
+---
+
+# Build alignment
+
+#### Before we begin, let's ensure we have everything prepared for sequence alignment:
+
+1.  **File Format Check:** The first step is to verify if your file is in FASTA format. If the file is currently in plain text format, you'll need to convert it by saving it as a `.fst` file.
+
+2.  **Downloading MEGA Software:** To perform sequence alignment, we'll need to use the MEGA software. Please follow the link below to access and download it: <https://www.megasoftware.net/home>
+
+# LET'S GET STARTED!
+
+1.  **Opening the MEGA Program:** Open the MEGA program. Click on **`File` \> `Open A File/Session`**, then select your FASTA file containing the sequences you wish to align. A dialog box will appear asking what you want to do. Choose **`Align`** .
+
+2.  **Reviewing Sequence Information:** Afterwards, you can review the information about your sequences. For example, under `Data`, you can click on `Genetic Code` to select the appropriate genetic code, or leave it as `standard.` You can also specify whether you are working with DNA or protein sequences.
+
+3.  **Checking for Missing Isolates:** You should also check if there are any isolates without sequences. If true, right-click on the isolate and delete it (see figure below).
+
+![](excluindo_isolado.jpg){fig-align="center" width="330"}
+
+4.  **Exploring Reverse Complement Option**: In the image above, we can also observe the option to `reverse complement`.When performing alignment and encountering an isolate that is markedly different, it is useful to reverse the isolate to check if the alignment improves. Sometimes, the sequence may be in reverse orientation. Verify if it aligns with the others; if not, you can undo the reverse using `Ctrl+Z`.
+
+5.  **Performing Alignment**: After that, select all sequences using the command `Ctrl+A`. Then, click on **`Alignment`** at the top of the window and choose the type of alignment: either by `Muscle` or by `Clustal W`. A new window will open where you can choose the number of iterations and the clustering model you wish to use (see figure below). Click `OK`, and the ***alignment will be ready*****.**
+
+~***Obs:***~ ~The\ choice\ between\ MUSCLE\ and\ ClustalW\ may\ vary\ depending\ on\ specific\ project\ needs,\ such\ as\ dataset\ size,\ desired\ accuracy,\ and\ user\ familiarity\ with\ each\ program.~
+
+![](mega.jpg){fig-align="center"}
+
+# Save the alignment 
+
+Click on **`Data`**, then select **`Export Alignment`** and choose the desired format. For subsequent analyses, the FASTA format will be used.
+
+![](salvando_alinhamento.jpg){fig-align="center" width="420"}

@@ -1,0 +1,39 @@
+---
+title: ""
+---
+
+# Genotypic richness
+
+This analysis should be conducted using **R Studio software**.
+
+Load libraries
+
+```{r, results='hide'}
+library(vcfR)
+library(poppr)
+library(ape)
+library(RColorBrewer)
+```
+
+Load data and transform
+
+```{r, results='hide'}
+usflu.dna2 <- fasta2DNAbin(file = 'alinhamentocerto.fas')
+isolate_name <- as.character(rownames(usflu.dna2))
+grupos <- ifelse(startsWith(isolate_name, "UFV"), "Grupo1", "Grupo2")
+usflu.genind <- DNAbin2genind(x = usflu.dna2, pop = grupos)
+usflu.genind
+
+```
+
+Is the genotypic richness of populations in Group 1 greater than that of populations in Group 2?
+
+```{r}
+library("vegan")
+mon.tab <- mlg.table(usflu.genind, plot = FALSE)
+min_sample <- min(rowSums(mon.tab))
+rarecurve(mon.tab, sample = min_sample, xlab = "Sample Size", ylab = "Expected MLGs")
+title("Rarefaction")
+```
+
+The number of observed MLGs (Multilocus Genotypes) corresponds to genotypic richness. When examining the MLG count alone, Group 2 appears to have higher genotypic richness. However, sample size should be taken into account. When comparing samples of equal size (as indicated by the vertical line on the x-axis), Group 2 actually shows slightly lower genotypic richness. This indicates that Group 1 has a greater diversity of different genotypes within its population.

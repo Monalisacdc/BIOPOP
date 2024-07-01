@@ -1,0 +1,29 @@
+---
+title: ""
+---
+
+# ACKNOWLEDGEMENTS AND SUPPORT
+
+## MIGRATION
+
+Paper about package mtraceR : <https://www.researchgate.net/publication/314538370_mtraceR_a_quick_intro>
+
+Paper about Population Genetic Inference With MIGRATE n: <https://currentprotocols.onlinelibrary.wiley.com/doi/full/10.1002/cpbi.87>
+
+Omar Mejía, video about migrate-n: <https://www.youtube.com/watch?v=JUsDhg_PTSE&t=109s&ab_channel=OmarMej%C3%ADaENCB-IPN>
+
+## ANALYSIS USING R
+
+I would like to express my gratitude to Professor Niklaus J. Grünwald and his research team for their invaluable support and guidance.
+
+I would like to thank Professor Niklaus J. Grünwald and his team for their publication, available [here](https://apsjournals.apsnet.org/doi/full/10.1094/PHYTO-12-16-0425-RVW#fig4).
+
+## ARLEQUIN
+
+I would also like to extend my gratitude to the YouTube channel by Natácia E. de Lima, which provided valuable support in understanding analyses using Arlequin. You can find her channel [here](https://www.youtube.com/@entendagenetica).
+
+------------------------------------------------------------------------
+
+I extend my heartfelt thanks to **Professor Eduardo Mizubuti** for teaching the course on Population Biology of Plant Pathogens. I am also grateful to **Michael G. Milgroom** for his outstanding book, which greatly enhanced my understanding of Population Biology of Plant Pathogens.
+
+# Thank you sincerely.

@@ -1,0 +1,147 @@
+---
+title: ""
+---
+
+The DAPC aims to partition variation into components between and within populations, emphasizing maximization of between-population variation and minimization of within-population variation. As a result, DAPC can also probabilistically assign individuals to populations, similar to Bayesian clustering methods (Milgroom, 2015).
+
+This analysis should be conducted using **R Studio software**.
+
+Load the required libraries
+
+```{r, results='hide'}
+library(adegenet)
+library(grDevices)
+library(seqinr)
+```
+
+Load the data
+
+```{r, results='hide'}
+obj <- fasta2genlight("alinhamentocerto.fas")
+
+```
+
+To define the population in my **obj** object, where I have 27 individuals belonging to group 1 and 32 belonging to group 2, I did:
+
+```{r, results='hide'}
+x <- pop(obj) <- c("grupo1", "grupo1", "grupo1", "grupo1", "grupo1", "grupo1", "grupo1", "grupo1", "grupo1","grupo1", "grupo1", "grupo1", "grupo1", "grupo1", "grupo1", "grupo1", "grupo1", "grupo1","grupo1", "grupo1", "grupo1",  "grupo1", "grupo1","grupo1", "grupo1", "grupo1", "grupo1", "grupo2", "grupo2", "grupo2","grupo2", "grupo2", "grupo2","grupo2", "grupo2", "grupo2",  "grupo2", "grupo2", "grupo2", "grupo2", "grupo2", "grupo2", "grupo2", "grupo2", "grupo2","grupo2", "grupo2", "grupo2", "grupo2", "grupo2", "grupo2", "grupo2", "grupo2", "grupo2", "grupo2", "grupo2", "grupo2", "grupo2", "grupo2") 
+```
+
+Specifying the number of PCs to attempt n.pca. Based on the results, we can restrict the number of PCs to 10
+
+```{r}
+set.seed(999)
+pramx <- xvalDapc(tab(obj, NA.method = "mean"), pop(obj))
+```
+
+Here I am already restricting it to 10 for n.pca.
+
+```{r}
+set.seed(999)
+system.time(pramx <- xvalDapc(tab(obj, NA.method = "mean"), pop(obj),
+                             n.pca = 0:10, n.rep = 100,
+                             parallel = "multicore", ncpus = 4L))
+```
+
+The results show that the first PC explains a significant portion of my findings
+
+```{r}
+pramx[-1]
+
+```
+
+Now that I have defined my number of PCs, I need to determine the optimal number of clusters. I set `choose = TRUE`, and when prompted in the console to `'Choose the number of clusters (>=2)'`, I will enter 10. This will allow me to obtain BIC values for up to 10 groups. Based on the BIC values, I will analyze the best number of clusters. Starting from 7, lower BIC values indicate better model fit
+
+```{r}
+t <- find.clusters(obj, max.n.clust=10, n.pca = 200, choose = TRUE)
+```
+
+```{r}
+maxK <- 10
+myMat <- matrix(nrow=10, ncol=maxK)
+colnames(myMat) <- 1:ncol(myMat)
+for(i in 1:nrow(myMat)){
+  grp <- find.clusters(obj, n.pca = 40, choose.n.clust = FALSE,  max.n.clust = maxK)
+  myMat[i,] <- grp$Kstat
+}
+
+library(ggplot2)
+library(reshape2)
+my_df <- melt(myMat)
+colnames(my_df)[1:3] <- c("Group", "K", "BIC")
+my_df$K <- as.factor(my_df$K)
+head(my_df)
+
+
+p1 <- ggplot(my_df, aes(x = K, y = BIC))
+p1 <- p1 + geom_boxplot()
+p1 <- p1 + theme_bw()
+p1 <- p1 + xlab("Number of groups (K)")
+p1
+```
+
+I started assuming it's 7
+
+```{r}
+t <- find.clusters(obj, max.n.clust=10, n.pca = 200, choose = TRUE, n.clust = 7)
+```
+
+```{r}
+head(t$grp, 7)
+
+```
+
+```{r}
+t$size
+
+```
+
+```{r}
+dapc1 <- dapc(obj, t$grp, n.pca = 2, n.da = 2, var.contr = TRUE, scale = FALSE)
+```
+
+Here we can observe overlap between groups 2 and 6, indicating they belong to the same cluster. Therefore, I will test for n.clust=6
+
+```{r}
+
+scatter(dapc1, ratio.pca=0.3, bg="white", legend = TRUE, pch=20, cell=10, cstar=0, solid=.4, cex=3, clab=0,clabel = FALSE, posi.leg = "bottomleft", scree.pca = TRUE,
+        posi.pca = "topleft", cleg = 1, xax = 1, yax = 2, inset.solid = 0.4
+        )
+```
+
+Testing n.clust = 6 still classifies two groups as different when they are actually the same. Look at groups 6 and 5. I will try 5 clusters
+
+```{r}
+t2 <- find.clusters(obj, max.n.clust=10, n.pca = 200, choose = TRUE, n.clust = 6)
+dapc2 <- dapc(obj, t2$grp, n.pca = 2, n.da = 2, var.contr = TRUE, scale = FALSE)
+
+
+scatter(dapc2, ratio.pca=0.3, bg="white", legend = TRUE, pch=20, cell=8, cstar=0, solid=.4, cex=3, clab=0,clabel = FALSE, posi.leg = "bottomleft", scree.pca = TRUE,
+        posi.pca = "topleft", cleg = 1, xax = 1, yax = 2, inset.solid = 0.4
+        )
+```
+
+Testing n.clust = 5, there is no overlap between groups. It seems that this subdivision is appropriate but I will test with n=4
+
+```{r}
+t3 <- find.clusters(obj, max.n.clust=10, n.pca = 200, choose = TRUE, n.clust =5)
+dapc3 <- dapc(obj, t3$grp, n.pca = 2, n.da = 2, var.contr = TRUE, scale = FALSE)
+
+scatter(dapc3, ratio.pca=0.3, bg="white", legend = TRUE, pch=20, cell=10, cstar=0, solid=.4, cex=3, clab=0,clabel = FALSE, posi.leg = "bottomleft", scree.pca = TRUE,
+        posi.pca = "topleft", cleg = 1, xax = 1, yax = 2, inset.solid = 0.4
+        )
+```
+
+So I decided to test n.clust = 4, and it was the smallest number of clusters that classified according to
+
+```{r}
+t3 <- find.clusters(obj,  n.pca = 200,  n.clust =4)
+dapc3 <- dapc(obj, t3$grp, n.pca = 2, n.da = 2, var.contr = TRUE, scale = FALSE)
+
+scatter(dapc3, ratio.pca=0.3, bg="white", legend = TRUE, pch=20, cell=7, cstar=0, solid=.4, cex=3, clab=0,clabel = FALSE, posi.leg = "bottomleft", scree.pca = TRUE,
+        posi.pca = "topleft", cleg = 1, xax = 1, yax = 2, inset.solid = 0.4)
+```
+
+**PCA Eigenvalues:** These are the eigenvalues associated with the principal components obtained through PCA analysis. They are important for determining how many principal components are needed to explain a significant amount of variance in the original data.
+
+**DA Eigenvalues:** These are the eigenvalues associated with the linear discriminants obtained through discriminant analysis. They are used to determine which discriminants capture the highest variance between classes.

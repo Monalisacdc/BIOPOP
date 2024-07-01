@@ -1,0 +1,61 @@
+---
+title: ""
+---
+
+## AMOVA with ARLEQUIN
+
+First, you need to download the software DNASP, which will be useful for defining groups, ploidy, and saving in the required format for input into Arlequin.
+
+To download DNASP, click here <http://www.ub.edu/dnasp/> .
+
+## To obtain the input to use in Arlequin
+
+Open DNASP, click on **`File`**, then select **`Open Data File`**, and choose the file where you saved the **aligned sequence in .fst** format, as explained in the alignment topic.
+
+The following window will open, displaying information such as the number of nucleotides, total number of sequences, ploidy, among other details (see figure below). In this example, the loaded sequence is haploid and not diploid, so it's necessary to make this adjustment.
+
+![](dnasp1.jpg){width="324"}
+
+To change to haploid, go to **`Data`**, select **`Format`**, and as shown in the figure below, you can adjust the information according to your sequence.
+
+![](dnasp2.jpg){width="344"}
+
+## Now let's define the groups
+
+Click on **`Data`**, then select **`Define Sequence Sets...`**. A dialog box will open where you'll see a list titled "List of all sequence," containing all individuals. Simply select all individuals belonging to the same group, click the right arrow **`>>`**, then `select all`, add a `new sequence set`, and assign a name to this set. Repeat this process for all groups you wish to create.
+
+![](dnasp3.jpg){width="391"}
+
+## Let's save this data
+
+To save, click on **`File`**, then **`Save/Export Data As`**, and choose the **`Arlequin file format`** .The data will be saved in a **.hap** file containing haplotypes and their respective sequences. Additionally, it will be saved in a .**arp** file containing information about each group (number of haplotypes and which haplotypes are present in each group). From these two generated files, another document will be manually created in .arp format, consolidating the information from both groups.
+
+## How to manually assemble this file for input into Arlequin?
+
+In this example, only two groups were created, so the input is based on that. This step is crucial, so **pay close attention** to how you assemble the input.
+
+![](dnasp4.jpg)
+
+In the figure, I'm showing only for group 1, which I named "Viçosa." However, if you continue scrolling through the .arp file, you will find headers for the other groups. The sequences for each haplotype are contained in the .hap file. In Repeat for the others groups. Essentially, copy the header definitions for each group in the file.arp and then paste the sequence next to the haplotype that is in the FILE.hap file. Finally, add the following information at the end of this new file:
+
+\[\[Structure\]\] StructureName="Phylogeography"
+
+NbGroups=1
+
+IndividualLevel = 0
+
+Group= { "vicosa" "concordia" }
+
+Note that there is 1 group containing two subdivisions. In this case, the aim is to assess Viçosa with Concordia. Now, if you had, for example, three subgroups—Viçosa, Concordia, and Uberlândia—and your goal was to evaluate Concordia with Viçosa first, and then separately Concordia with Uberlândia, you would have 2 main groups and 3 subgroups in total.
+
+## Your input is ready. 
+
+# Let's analyze it using the Arlequin software
+
+First, you need to download the Arlequin software. To download, click <https://cmpg.unibe.ch/software/arlequin35/Arl35Downloads.html>.
+
+Click on `File` and then `Open Project`, and select the edited file in FASTA format. Next, navigate to `Settings`, choose the `AMOVA` option, and select your preferences for AMOVA type (standard computation or locus-by-locus), number of permutations, distance calculation method (such as pairwise differences), and others as needed.
+
+After defining these settings, click on `Start`, and a text document will be saved in the same folder as your input data. Below is an example of the output:
+
+![](arlequin_saida.jpg){fig-align="center" width="532"}

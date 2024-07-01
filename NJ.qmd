@@ -1,0 +1,27 @@
+---
+title: ""
+---
+
+This analysis should be conducted using **MEGA**.
+
+The steps to open the data in MEGA are explained under **Alignment.**
+
+Let's start by clicking on "Models," followed by "Find Best DNA/Protein Models (ML)...
+
+![](nj.jpg){fig-align="center"}
+
+This action will open a new window where you can set parameters based on your input data and researcher preferences. After clicking "Ok," a table similar to the following will be generated.
+
+![](nj2.png){fig-align="center"}
+
+This table indicates the optimal model for constructing the tree.
+
+Now that we have identified the best model, let's close this table and proceed to `Phylogeny`, then select `Construct/Test Neighbor-Joining Tree`
+
+![](nj3.png)
+
+Then another window will open where you can select the ideal model we just tested. After clicking `Ok`, the tree will be generated.
+
+![](nj4.png){fig-align="center" width="443"}
+
+![](NJ5.png)

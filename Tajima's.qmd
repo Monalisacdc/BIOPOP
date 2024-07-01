@@ -1,0 +1,21 @@
+---
+title: ""
+---
+
+Tajima's neutrality test
+
+Open the DNASP software, load the data as described in the **AMOVA with Alerquin** instructions. Next, navigate to the `Analysis` tab and select `Tajima's test`.
+
+![](tajima1.png){fig-align="center" width="412"}
+
+Then calculate the indices for the two populations.
+
+![](tajima2.png)
+
+Finally, please organize the results as follows:
+
+![](tajimatabela.png){fig-align="center"}
+
+For Group 1, a positive Tajima's D suggests a potential excess of rare polymorphisms, possibly indicating population expansion or recent positive selection. A p-value greater than 0.1 suggests no significant evidence against a neutral evolutionary model, indicating no strong support for significant mutation in this population.
+
+In contrast, for Group 2, a negative Tajima's D might indicate recent population expansion or positive selection. Similarly, a p-value greater than 0.1 suggests no significant evidence against a neutral evolutionary model, implying no strong evidence of significant mutation in this population either.

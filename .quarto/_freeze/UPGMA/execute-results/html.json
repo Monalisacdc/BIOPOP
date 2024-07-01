@@ -1,0 +1,15 @@
+{
+  "hash": "2161e4595570f0261ea2d9b021365eda",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"\"\n---\n\n\nDistance-based trees rely on genetic distance measures. UPGMA assumes uniform evolutionary rates among branches and calculates distances based on allele frequencies among subpopulations, where populations with similar allele frequencies show smaller genetic distances. Using UPGMA, we can observe clustering patterns akin to those in DAPC.\n\nLoad libraries\n\n\n::: {.cell}\n\n```{.r .cell-code}\nlibrary(vcfR)\nlibrary(poppr)\nlibrary(ape)\nlibrary(RColorBrewer)\n```\n:::\n\n\nLoad data and transform\n\n\n::: {.cell}\n\n```{.r .cell-code}\nusflu.dna2 <- fasta2DNAbin(file = 'alinhamentocerto.fas')\nisolate_name <- as.character(rownames(usflu.dna2))\ngrupos <- ifelse(startsWith(isolate_name, \"UFV\"), \"Grupo1\", \"Grupo2\")\nusflu.genind <- DNAbin2genind(x = usflu.dna2, pop = grupos)\nusflu.genind\n```\n:::\n\n\nDefine ploidy\n\n\n::: {.cell}\n\n```{.r .cell-code}\nploidy(usflu.genind) <- 1\n```\n:::\n\n\nConstruct a distance tree using the UPGMA algorithm with 100 bootstrap replicates.\n\n\n::: {.cell}\n\n```{.r .cell-code}\ntree <- aboot(usflu.genind, tree = \"upgma\", distance = nei.dist , sample = 100, showtree = F, cutoff = 50, quiet = T)\n```\n:::\n\n\nVisualize your results.\n\n\n::: {.cell}\n\n```{.r .cell-code}\ncols <- brewer.pal(n = 2, name = \"Dark2\")\n\nplot.phylo(tree, cex = 0.8, font = 2, adj = 0, tip.color = cols[pop(usflu.genind)])\nnodelabels(tree$node.label, adj = c(1.3, -0.5), frame = \"n\", cex = 0.8, font = 3, xpd = TRUE)\nlegend('topleft', legend = c(\"Viçosa\", \"Concordia\"), fill = cols, border = FALSE, bty = \"n\", cex = 2)\naxis(side = 1)\ntitle(xlab = \"Genetic distance\")\n```\n\n::: {.cell-output-display}\n![](UPGMA_files/figure-html/unnamed-chunk-5-1.png){width=1152}\n:::\n\n```{.r .cell-code}\nlibrary(ggplotify)\n\n# Converter para objeto ggplot\ngg_tree <- as.ggplot(~{\n  plot.phylo(tree, cex = 0.8, font = 2, adj = 0, tip.color = cols[pop(usflu.genind)])\n  nodelabels(tree$node.label, adj = c(1.3, -0.5), frame = \"n\", cex = 0.8, font = 3, xpd = TRUE)\n  legend('topleft', legend = c(\"Viçosa\", \"Concordia\"), fill = cols, border = FALSE, bty = \"n\", cex = 2)\n  axis(side = 1)\n  title(xlab = \"Genetic distance\")\n})\n\n# Salvar usando ggsave\n#ggsave(\"upgma.png\", plot = gg_tree, dpi = 1000, width = 10, height = 15, units = \"in\", bg= 'white' )\n```\n:::\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

@@ -1,0 +1,15 @@
+---
+title: ""
+---
+
+# ANALYSIS OF MOLECULAR VARIANCE
+
+### Summary
+
+AMOVA partitions the observed genetic diversity, represented in the matrix of pairwise distances among all individuals, into **diversity within and among subpopulations** or additional hierarchical levels specified by the researcher. AMOVA creates a matrix of genetic distances among all individuals in a sample based on allele sharing or differences in nucleotide sequences. It is a method used to estimate the fixation index (FST), which is the probability that any two randomly sampled alleles in a population are identical by descent (Milgroom, 2015).
+
+Detailed explanations can be found in Michael G. Milgroom's book "**Population Biology of Plant Pathogens**," **Chapter 6**, pages **123-128**.
+
+![](LIVRO.jpg){width="267"}
+
+# Here, I'll explain two methods for calculating AMOVA. First, using the software **Arlequin**, and then using **R**.

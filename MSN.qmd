@@ -1,0 +1,35 @@
+---
+title: ""
+---
+
+Minimum Spanning Network (MSN): The MSN clusters multilocus genotypes (MLGs) based on genetic distances between them. Each MLG serves as a node, with genetic distance represented by edges.
+
+This analysis should be conducted using **R Studio software**.
+
+Load libraries
+
+```{r, results='hide'}
+library(vcfR)
+library(poppr)
+library(ape)
+
+```
+
+Load data and transform
+
+```{r, results='hide'}
+usflu.dna2 <- fasta2DNAbin(file = 'alinhamentocerto.fas')
+isolate_name <- as.character(rownames(usflu.dna2))
+grupos <- ifelse(startsWith(isolate_name, "UFV"), "Grupo1", "Grupo2")
+usflu.genind <- DNAbin2genind(x = usflu.dna2, pop = grupos)
+usflu.genind
+
+```
+
+ This function opens an interface that plots the graph, making it easier as you can simply click through options like distance model and coloring preferences.
+
+```{r}
+#imsn()
+```
+
+![](images/clipboard-2306314022.png)

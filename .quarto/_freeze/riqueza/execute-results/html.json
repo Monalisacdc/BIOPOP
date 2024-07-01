@@ -1,0 +1,15 @@
+{
+  "hash": "0334ddb03bdb3bfb20b2388c3f8d3908",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"\"\n---\n\n\n# Genotypic richness\n\nThis analysis should be conducted using **R Studio software**.\n\nLoad libraries\n\n\n::: {.cell}\n\n```{.r .cell-code}\nlibrary(vcfR)\nlibrary(poppr)\nlibrary(ape)\nlibrary(RColorBrewer)\n```\n:::\n\n\nLoad data and transform\n\n\n::: {.cell}\n\n```{.r .cell-code}\nusflu.dna2 <- fasta2DNAbin(file = 'alinhamentocerto.fas')\nisolate_name <- as.character(rownames(usflu.dna2))\ngrupos <- ifelse(startsWith(isolate_name, \"UFV\"), \"Grupo1\", \"Grupo2\")\nusflu.genind <- DNAbin2genind(x = usflu.dna2, pop = grupos)\nusflu.genind\n```\n:::\n\n\nIs the genotypic richness of populations in Group 1 greater than that of populations in Group 2?\n\n\n::: {.cell}\n\n```{.r .cell-code}\nlibrary(\"vegan\")\nmon.tab <- mlg.table(usflu.genind, plot = FALSE)\nmin_sample <- min(rowSums(mon.tab))\nrarecurve(mon.tab, sample = min_sample, xlab = \"Sample Size\", ylab = \"Expected MLGs\")\ntitle(\"Rarefaction\")\n```\n\n::: {.cell-output-display}\n![](riqueza_files/figure-html/unnamed-chunk-3-1.png){width=672}\n:::\n:::\n\n\nThe number of observed MLGs (Multilocus Genotypes) corresponds to genotypic richness. When examining the MLG count alone, Group 2 appears to have higher genotypic richness. However, sample size should be taken into account. When comparing samples of equal size (as indicated by the vertical line on the x-axis), Group 2 actually shows slightly lower genotypic richness. This indicates that Group 1 has a greater diversity of different genotypes within its population.\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

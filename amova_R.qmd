@@ -1,0 +1,77 @@
+---
+title: ""
+---
+
+## Loading Data, Organizing, and Converting to a Genind Object
+
+The data used for our analyses has been in FASTA format from the beginning, so the initial step is to load this FASTA file into R. The function used for this belongs to the `adegenet` package, and it automatically converts the data into DNAbin format
+
+```{r, results='hide'}
+library(adegenet)
+usflu.dna2 <- fasta2DNAbin(file = 'alinhamentocerto.fas')
+```
+
+Converts the row names (or identifiers) of the object `usflu.dna2` into character strings and stores them in the variable `isolate_name`. This is useful for manipulating and verifying the names of the isolates.
+
+```{r}
+isolate_name <- as.character(rownames(usflu.dna2))
+```
+
+A variable `grupos` is created that assigns the value "Grupo1" to isolates whose names start with "UFV" and "Grupo2" to the rest of the isolates. The `startsWith` function checks whether the isolate's name begins with "UFV".
+
+```{r}
+grupos <- ifelse(startsWith(isolate_name, "UFV"), "Grupo1", "Grupo2")
+```
+
+The function `DNAbin2genind` converts a DNAbin object into a genind object, which is used for population genetic analysis. The argument `pop = grupos` assigns the groups (previously defined as "Grupo1" and "Grupo2") to the isolates within the genind object. This enables subsequent analyses of population structure and genetic diversity based on these defined groups.
+
+```{r}
+usflu.genind <- DNAbin2genind(x = usflu.dna2, pop = grupos)
+usflu.genind
+```
+
+## Organizing the data for AMOVA
+
+The `poppr` library, which is used for population genetic analysis
+
+```{r, results='hide'}
+library("poppr")
+```
+
+The variable `grupos` is a vector that defines the groups for analysis. It contains 27 individuals labeled as "Grupo1" and 32 individuals labeled as "Grupo2". `df_grupos` converts the vector `grupos` into a dataframe, which can be used as a stratification attribute (`strata`) in the genetic object (`genind`)
+
+```{r, results='hide'}
+grupos <- c(rep("Grupo1", 27), rep("Grupo2", 32))
+df_grupos <- data.frame(grupos)
+
+```
+
+This assigns the previously defined groups (`df_grupos`) to the genetic object `usflu.genind`. **This enables the analysis of population structure based on the defined groups.**
+
+```{r}
+strata(usflu.genind) <- df_grupos
+
+```
+
+The function `as.genclone` converts the genetic object `usflu.genind` into a format suitable for clonality analysis (GenClone). This is useful for detecting genetic clones within the population.
+
+```{r}
+usflu.genind <- as.genclone(usflu.genind)
+usflu.genind
+table(strata(usflu.genind, ~grupos))  # Populations
+```
+
+## AMOVA
+
+The method calculates differences in allelic content between haplotypes using a matrix of **Euclidean squared distances**, consistent with the approach used by **Arlequin**. However, analysts can customize this method according to their preferences. In this example, the `method` is set to **`ade4`**. If you choose to use another method, switch to **`pegas`**.
+
+```{r}
+amovac <- poppr.amova(usflu.genind, ~grupos, method = "ade4")
+amovac
+```
+
+Returns the available arguments for the `poppr.amova` function, which can help understand how to configure the analysis.
+
+```{r}
+args(poppr.amova)
+```

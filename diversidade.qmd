@@ -1,0 +1,56 @@
+---
+title: ""
+---
+
+# Genotypic diversity and Eveness
+
+This analysis should be conducted using **R Studio software.**
+
+Load libraries
+
+```{r, results='hide'}
+library(vcfR)
+library(poppr)
+library(ape)
+library(RColorBrewer)
+```
+
+Load data and transform
+
+```{r, results='hide'}
+usflu.dna2 <- fasta2DNAbin(file = 'alinhamentocerto.fas')
+isolate_name <- as.character(rownames(usflu.dna2))
+grupos <- ifelse(startsWith(isolate_name, "UFV"), "Grupo1", "Grupo2")
+usflu.genind <- DNAbin2genind(x = usflu.dna2, pop = grupos)
+usflu.genind
+
+```
+
+Calculating diversity and evenness (E.5)
+
+```{r}
+diversity = poppr(usflu.genind)
+diversity
+```
+
+👆**interpretation**: Both groups exhibit a significant variety of multilocus genotypes (MLGs), indicating high genetic diversity within their respective populations. The Shannon-Wiener (H') and Stoddart-Taylor (G) diversity indices are quite similar across the groups, suggesting a balanced distribution of MLGs. However, Group 2 stands out with a notably higher level of genetic diversity, as indicated by a greater G value.
+
+Moreover, the lambda index, which represents the probability that two randomly chosen genotypes will be different, is slightly higher in Group 2 (0.875) compared to Group 1 (0.850). This reinforces the observation that Group 2 has higher genetic diversity, reflecting greater heterogeneity in the genotypic composition of its populations.
+
+Since the sample sizes used to calculate these diversity measures differ, direct comparison is not appropriate. Therefore, I will compute the Simpson's index, which is obtained by subtracting the sum of squared genotype frequencies from one. This index estimates the probability that two randomly selected genotypes will be different, ranging from 0 (indicating no genotype differences) to 1 (indicating maximum genotype diversity).👇
+
+```{r}
+N      <- diversity$N      
+lambda <- diversity$lambda 
+(N/(N - 1)) * lambda      
+```
+
+When calculating the adjusted Simpson's index, which reflects the probability of two genotypes being different, both groups showed high values (0.88 for Group 1 and 0.90 for Group 2), indicating high genetic diversity in both populations. Therefore, while Group 2 exhibits slightly higher diversity compared to Group 1, both demonstrate substantial levels of genetic diversity. This suggests a high likelihood of randomly sampling different genotypes from the same subpopulation
+
+## Eveness
+
+```{r}
+mlg.table(usflu.genind)
+```
+
+The E.5 evenness index revealed a uniform distribution of genotypic abundances in both populations, with values close to 0.65. This suggests that the populations maintain a broad genetic diversity without any specific genotype becoming dominant. 👆

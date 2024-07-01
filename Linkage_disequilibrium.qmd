@@ -1,0 +1,51 @@
+---
+title: "Linkage disequilibrium"
+---
+
+**Linkage disequilibrium**, also referred to as gametic disequilibrium, is commonly defined and modeled for haplotypes or populations of haploid gametes. LD estimation involves comparing observed haplotype frequencies from two or more loci with those expected under the null hypothesis of random mating. Expected frequencies are calculated assuming independence (no selection, mutation, etc.). This assumption holds that alleles at unlinked loci are independent if populations mate randomly, segregating independently during meiosis, where D=0 (Milgroom, 2015)3,.
+
+This analysis should be conducted using **R Studio software**.
+
+Load libraries
+
+```{r, results='hide'}
+library(vcfR)
+library(poppr)
+library(ape)
+library(RColorBrewer)
+```
+
+Load data and transform
+
+```{r, results='hide'}
+usflu.dna2 <- fasta2DNAbin(file = 'alinhamentocerto.fas')
+isolate_name <- as.character(rownames(usflu.dna2))
+grupos <- ifelse(startsWith(isolate_name, "UFV"), "Grupo1", "Grupo2")
+usflu.genind <- DNAbin2genind(x = usflu.dna2, pop = grupos)
+usflu.genind
+
+```
+
+```{r}
+library("magrittr")
+
+######group1##############3
+grup1 <- popsub(usflu.genind, "Grupo1")
+ia(grup1, sample = 999)
+
+  grup1 %>% clonecorrect() %>% ia(sample = 999)
+
+
+################Group 2 #############
+
+
+gp2 <- popsub(usflu.genind, "Grupo2")
+ia(gp2, sample = 999)
+
+gp2 %>% clonecorrect() %>% ia(sample = 999)
+
+```
+
+**H0: There is no linkage between the loci.**
+
+For Group 1, comprising 27 individuals, we observed a linkage disequilibrium (LD) of 0.23 with a p-value of 0.001, leading to the rejection of the null hypothesis of no linkage. Similarly, in Group 2, which includes 32 individuals, we found an LD of 0.234 with p=0.001, also rejecting the null hypothesis. Even after adjusting the data to account for clonality, the results remain consistent, albeit with different LD values. The graphical representation confirmed these findings, depicting distributions that deviate significantly from those expected under no linkage. Thus, we conclude that both populations are clonal.
